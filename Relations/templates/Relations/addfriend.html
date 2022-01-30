@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body{
+            padding: 0%;
+            margin: 0%;
+        }
+        main{
+            display: flex;
+        }
+        nav{
+            min-width: 300px;
+            min-height: 100vh;
+            background-color: cyan;
+        }
+        a{
+            display: block;
+            background-color:#9df8f8 ;
+            margin: 20px;
+            padding: 10px;
+            border-radius: 20px;
+            color: black;
+            text-decoration: none;
+            text-align: center;
+        }
+        a:hover{
+            background-color: hotpink;
+        }
+        form>input, textarea{
+            display: block;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid black;
+            width: 250px;  
+        }
+        button{
+            padding: 10px;
+            border: 1px dotted #e21717;
+            border-radius: 1px;
+            background-color: white;}
+
+         section{
+            display:flex;
+            flex-wrap: wrap;
+            } 
+        
+        form{
+            width: 500px;
+        }
+        .active{
+            background-color:steelblue;
+        }
+    </style>
+    <main>
+        <nav>
+            <a href='{%url "App_in"%}' > Profile </a>
+            <a href='{%url "Addfriend"%}' class='active'> Search</a>
+            <a href='#'> Profile </a>
+            <a href='#'> Profile </a>
+        </nav>
+        <section>
+            <form method="post" >
+                {%csrf_token%}
+                {{form}}
+                <br>
+                <button>
+                    Search Friend
+                </button>
+            </form>
+            <style>
+                .users{
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 99%;
+                    box-shadow: 0px 0px 10px 0px grey;
+                    margin: 20px;
+                }
+                .users img{
+                    display: block;
+                    width: 300px;
+                    height: 300px;
+                    object-fit: cover;
+                    background-color: grey;
+                }
+            </style>
+            {%if users%}
+            {%for user in users%}
+            <aside class='users'>
+                    {%if user.profile.profile_img%}
+                    <img src="{{user.profile.profile_img.url}}">
+                    {% else %}
+                        <img>
+                    {%endif%}
+                <div>
+                    <p>
+                        Name: {{user.username}}
+                    </p>
+                    <p>
+                     Skill: {{user.profile.skill}}
+                        
+                    </p>
+                    <a href='{%url "Add" user.id%}'>
+                        Add Friend
+                    </a>
+                </div>
+                
+            </aside>
+            {%endfor%}
+            {%endif%}
+            
+        </section>
+    </main>
+</body>
+</html>
